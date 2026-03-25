@@ -86,4 +86,18 @@ SCRAPE_URLS = [
 
     # Student guide
     "https://student.kent.ac.uk",
+
+    # Postgraduate applications
+    "https://www.kent.ac.uk/courses/postgraduate/apply",
+    "https://www.kent.ac.uk/courses/postgraduate",
+
+    # Student support hub
+    "https://student.kent.ac.uk/support",
+    "https://student.kent.ac.uk/studies",
+
+    # Disability and neurodiversity
+    "https://www.kent.ac.uk/student-support/disability-and-neurodiversity",
+
+    # Student guides
+    "https://www.kent.ac.uk/guides",
 ]

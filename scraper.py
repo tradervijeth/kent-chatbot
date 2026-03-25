@@ -72,10 +72,22 @@ def extract_text(html, url):
         "content": cleaned,
     }
 
+def extract_links(soup, base_domain="kent.ac.uk"):
+    """Extract internal Kent links from a page for crawling."""
+    links = set()
+    for a_tag in soup.find_all("a", href=True):
+        href = a_tag["href"]
+        if base_domain in href and href.startswith("http"):
+            if not any(href.endswith(ext) for ext in [".pdf", ".jpg", ".png", ".zip"]):
+                links.add(href.split("#")[0].split("?")[0])
+    return links
+
 
 def scrape_all():
-    """Scrape all configured URLs and return extracted content."""
+    """Scrape all configured URLs and discover new links."""
     pages = []
+    seen_urls = set(SCRAPE_URLS)
+    discovered = []
     total = len(SCRAPE_URLS)
 
     for i, url in enumerate(SCRAPE_URLS, 1):
@@ -83,17 +95,37 @@ def scrape_all():
         html = fetch_page(url)
 
         if html:
+            soup = BeautifulSoup(html, "html.parser")
             page_data = extract_text(html, url)
             word_count = len(page_data["content"].split())
             print(f"  -> {page_data['title']} ({word_count} words)")
             pages.append(page_data)
+
+            # Discover new internal links
+            for link in extract_links(soup):
+                if link not in seen_urls:
+                    seen_urls.add(link)
+                    discovered.append(link)
         else:
             print(f"  -> Skipped")
 
-        # Be polite - don't hammer the server
+        time.sleep(1)
+
+    # Scrape discovered pages (capped at 50 to stay within limits)
+    cap = min(len(discovered), 50)
+    print(f"\nDiscovered {len(discovered)} new links, scraping up to {cap}...")
+    for i, url in enumerate(discovered[:cap], 1):
+        print(f"[Extra {i}/{cap}] Scraping: {url}")
+        html = fetch_page(url)
+        if html:
+            page_data = extract_text(html, url)
+            word_count = len(page_data["content"].split())
+            print(f"  -> {page_data['title']} ({word_count} words)")
+            pages.append(page_data)
         time.sleep(1)
 
     return pages
+
 
 
 def main():
