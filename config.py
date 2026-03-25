@@ -48,6 +48,8 @@ SCRAPE_URLS = [
     "https://www.kent.ac.uk/courses/undergraduate/apply/after-you-apply",
     "https://www.kent.ac.uk/courses/undergraduate/apply/application-timeline",
     "https://www.kent.ac.uk/clearing",
+    "https://www.kent.ac.uk/courses/postgraduate/apply",
+    "https://www.kent.ac.uk/courses/postgraduate",
 
     # Fees and funding
     "https://www.kent.ac.uk/courses/funding",
@@ -60,13 +62,21 @@ SCRAPE_URLS = [
     "https://student.kent.ac.uk/support/wellbeing",
     "https://student.kent.ac.uk/support/mental-health",
     "https://student.kent.ac.uk/support/seeking-support-from-ssw",
+    "https://student.kent.ac.uk/support/how-to-register-with-ssw",
+    "https://student.kent.ac.uk/support/ssw-contact-us",
+    "https://student.kent.ac.uk/support/getting-support-now",
 
     # Assessments and academic
     "https://www.kent.ac.uk/guides/extenuating-circumstances",
     "https://www.kent.ac.uk/guides/exams",
+    "https://www.kent.ac.uk/guides/timetabling",
+    "https://www.kent.ac.uk/guides/submitting-your-work",
+    "https://www.kent.ac.uk/guides/using-moodle",
+    "https://www.kent.ac.uk/guides/using-ai-in-your-studies",
 
     # Key dates
     "https://student.kent.ac.uk/studies/university-term-and-closure-dates",
+    "https://www.kent.ac.uk/guides/term-dates",
 
     # Accommodation
     "https://www.kent.ac.uk/accommodation",
@@ -76,28 +86,62 @@ SCRAPE_URLS = [
     "https://www.kent.ac.uk/library",
     "https://www.kent.ac.uk/library/opening-hours-and-support",
     "https://www.kent.ac.uk/welcome/library-it",
+    "https://www.kent.ac.uk/it-services",
 
     # Careers
     "https://www.kent.ac.uk/guides/careers",
+    "https://www.kent.ac.uk/careers",
+    "https://www.kent.ac.uk/guides/study-plus",
+    "https://www.kent.ac.uk/guides/employability-points",
+    "https://www.kent.ac.uk/guides/jobshop",
+    "https://www.kent.ac.uk/guides/life-after-uni",
 
     # International students
     "https://www.kent.ac.uk/international/how-to-apply",
     "https://www.kent.ac.uk/international/international-admission-deadlines",
-
-    # Student guide
-    "https://student.kent.ac.uk",
-
-    # Postgraduate applications
-    "https://www.kent.ac.uk/courses/postgraduate/apply",
-    "https://www.kent.ac.uk/courses/postgraduate",
+    "https://www.kent.ac.uk/guides/immigration-and-visas",
+    "https://www.kent.ac.uk/guides/international-students",
 
     # Student support hub
+    "https://student.kent.ac.uk",
     "https://student.kent.ac.uk/support",
+    "https://student.kent.ac.uk/support/engagement",
+    "https://student.kent.ac.uk/support/administration",
+    "https://student.kent.ac.uk/support/nexus",
     "https://student.kent.ac.uk/studies",
+    "https://reportandsupport.kent.ac.uk/",
+
+    # Financial and cost of living
+    "https://www.kent.ac.uk/guides/finance-and-funding",
+    "https://www.kent.ac.uk/guides/cost-of-living-support",
 
     # Disability and neurodiversity
-    "https://www.kent.ac.uk/student-support/disability-and-neurodiversity",
+    "https://student.kent.ac.uk/support/disability-and-neurodiversity",
+    "https://www.kent.ac.uk/guides/disability-and-neurodiversity",
 
-    # Student guides
+    # Safety
+    "https://student.kent.ac.uk/support/safety",
+    "https://www.kent.ac.uk/guides/safety",
+
+    # Support for all groups
+    "https://www.kent.ac.uk/guides/care-experienced-students",
+    "https://www.kent.ac.uk/guides/long-term-health-conditions",
+    "https://www.kent.ac.uk/guides/mature-commuting-and-part-time-students",
+    "https://www.kent.ac.uk/guides/carers",
+    "https://www.kent.ac.uk/guides/pregnant-students-and-parents",
+    "https://www.kent.ac.uk/guides/estranged-students",
+
+    # Student admin tools
+    "https://www.kent.ac.uk/guides/student-status-letter",
+    "https://www.kent.ac.uk/guides/kentvision",
+    "https://www.kent.ac.uk/guides/presto",
+    "https://www.kent.ac.uk/guides/progress-profiles",
+    "https://www.kent.ac.uk/guides/student-conduct-and-complaints",
+
+    # Campus facilities
+    "https://www.kent.ac.uk/catering",
+    "https://www.kent.ac.uk/sport",
+    "https://www.kent.ac.uk/student-support/health",
+    "https://www.kent.ac.uk/estates/parking",
     "https://www.kent.ac.uk/guides",
 ]
