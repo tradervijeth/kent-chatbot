@@ -43,47 +43,47 @@ CONTEXT FROM UNIVERSITY OF KENT WEBSITE:
 # --- Pages to scrape ---
 SCRAPE_URLS = [
     # Admissions and applications
-    "https://www.kent.ac.uk/guides/apply",
-    "https://www.kent.ac.uk/guides/clearing",
-    "https://www.kent.ac.uk/guides/ucas-personal-statement",
+    "https://www.kent.ac.uk/courses/undergraduate/apply",
+    "https://www.kent.ac.uk/courses/undergraduate/apply/how-to-apply",
+    "https://www.kent.ac.uk/courses/undergraduate/apply/after-you-apply",
+    "https://www.kent.ac.uk/courses/undergraduate/apply/application-timeline",
+    "https://www.kent.ac.uk/clearing",
 
     # Fees and funding
-    "https://www.kent.ac.uk/guides/undergraduate-fees",
-    "https://www.kent.ac.uk/guides/postgraduate-fees",
-    "https://www.kent.ac.uk/guides/scholarships",
-    "https://www.kent.ac.uk/guides/student-finance",
+    "https://www.kent.ac.uk/courses/funding",
+    "https://www.kent.ac.uk/courses/funding/undergraduate",
+    "https://www.kent.ac.uk/courses/funding/postgraduate",
 
     # Student wellbeing and support
+    "https://www.kent.ac.uk/student-support",
     "https://www.kent.ac.uk/student/wellbeing",
-    "https://www.kent.ac.uk/student/support",
-    "https://www.kent.ac.uk/student-support/disability",
+    "https://student.kent.ac.uk/support/wellbeing",
+    "https://student.kent.ac.uk/support/mental-health",
+    "https://student.kent.ac.uk/support/seeking-support-from-ssw",
 
     # Assessments and academic
-    "https://www.kent.ac.uk/guides/assessments",
     "https://www.kent.ac.uk/guides/extenuating-circumstances",
-    "https://www.kent.ac.uk/guides/academic-appeals",
-    "https://www.kent.ac.uk/guides/complaints",
     "https://www.kent.ac.uk/guides/exams",
 
-    # Key dates and graduation
-    "https://www.kent.ac.uk/guides/term-dates",
-    "https://www.kent.ac.uk/guides/graduation",
+    # Key dates
+    "https://student.kent.ac.uk/studies/university-term-and-closure-dates",
 
-    # Campus and accommodation
-    "https://www.kent.ac.uk/guides/accommodation",
-    "https://www.kent.ac.uk/guides/canterbury",
+    # Accommodation
+    "https://www.kent.ac.uk/accommodation",
+    "https://www.kent.ac.uk/accommodation/canterbury",
 
-    # IT and library
-    "https://www.kent.ac.uk/guides/it-services",
-    "https://www.kent.ac.uk/guides/passwords",
-    "https://www.kent.ac.uk/guides/library",
+    # Library and IT
+    "https://www.kent.ac.uk/library",
+    "https://www.kent.ac.uk/library/opening-hours-and-support",
+    "https://www.kent.ac.uk/welcome/library-it",
 
     # Careers
     "https://www.kent.ac.uk/guides/careers",
 
     # International students
-    "https://www.kent.ac.uk/guides/visas",
+    "https://www.kent.ac.uk/international/how-to-apply",
+    "https://www.kent.ac.uk/international/international-admission-deadlines",
 
-    # Contact
-    "https://www.kent.ac.uk/guides/contact-us",
+    # Student guide
+    "https://student.kent.ac.uk",
 ]
