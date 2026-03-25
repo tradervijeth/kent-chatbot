@@ -14,7 +14,7 @@ CHUNK_OVERLAP = 80
 TOP_K = 4
 
 # Google's free embedding model - turns text into vectors
-EMBEDDING_MODEL = "models/text-embedding-004"
+EMBEDDING_MODEL = "models/gemini-embedding-001"
 
 # Google's free LLM - generates the chatbot responses
 GENERATION_MODEL = "gemini-2.0-flash"
