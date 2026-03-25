@@ -17,7 +17,7 @@ TOP_K = 4
 EMBEDDING_MODEL = "models/gemini-embedding-001"
 
 # Google's free LLM - generates the chatbot responses
-GENERATION_MODEL = "gemini-2.0-flash"
+GENERATION_MODEL = "gemini-2.5-flash"
 
 # --- System prompt ---
 SYSTEM_PROMPT = """You are a helpful and friendly student support assistant for the University of Kent.
