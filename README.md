@@ -15,6 +15,8 @@ Standard chatbots often hallucinate facts or fail when asked highly specific uni
 5. **Strict Safety Guardrails:** I engineered the system prompt to explicitly refuse medical or psychological advice. If a student mentions severe depression or suicidal ideation, the LLM intercepts the risk and immediately supplies the official University Campus Security number, Student Support emails, and the NHS emergency helplines.
 6. **Robust Quota Management:** I implemented graceful degradation try/except blocks to handle `ResourceExhausted` API errors cleanly.
 7. **Deep Branding & Accessibility Integration:** I themed the Streamlit UI to match the official University of Kent identity (Navy Blue, Cyan, Overpass Font). I also restructured the University logo into an accessible "Card Badge" layout so it remains highly readable even if visually impaired users select Dark Mode or High Contrast themes on their OS.
+8. **Real-time Streaming UI:** Engineered the Gemini LLM connection to stream the generated responses token-by-token back to the frontend, driving perceived latency limits to near-zero.
+9. **Interactive Memory Controls:** Programmed a persistent application sidebar enabling immediate chat context resets via a custom `st.session_state` wiping function.
 
 ## Tech Stack
 * **Frontend UI:** Streamlit
