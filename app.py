@@ -11,11 +11,12 @@ import streamlit as st
 import base64
 import google.generativeai as genai
 from dotenv import load_dotenv
+from ddgs import DDGS
 from retriever import Retriever
 from config import SYSTEM_PROMPT, GENERATION_MODEL
 
 # --- Setup ---
-load_dotenv()
+load_dotenv(override=True)
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 
@@ -173,9 +174,24 @@ if prompt := st.chat_input("Ask a question..."):
     # Generate response
     with st.chat_message("assistant"):
         with st.spinner("Searching university information..."):
-            # Step 1: Retrieve relevant content
+            # Step 1: Retrieve relevant content from RAG
             results = retriever.retrieve(prompt)
             context = retriever.format_context(results)
+
+            # Step 1b: Supplement with live web search
+            try:
+                with DDGS() as ddgs:
+                    # Sometimes site-specific queries return empty lists format, so fallback if needed
+                    web_results = list(ddgs.text(f"{prompt} site:kent.ac.uk", max_results=3))
+                    if not web_results:
+                        web_results = list(ddgs.text(prompt, max_results=3))
+                    
+                    if web_results:
+                        web_context = "\n".join([r["body"] for r in web_results])
+                        context += f"\n\nAdditional web search results:\n{web_context}"
+            except Exception as e:
+                pass  # Fallback to RAG-only if search fails
+
 
             # Step 2: Build the prompt with context
             full_prompt = SYSTEM_PROMPT.format(context=context)
@@ -189,15 +205,27 @@ if prompt := st.chat_input("Ask a question..."):
                     "parts": [msg["content"]],
                 })
 
-            response = model.generate_content(
-                contents=[
-                    {"role": "user", "parts": [full_prompt]},
-                    *chat_history,
-                    {"role": "user", "parts": [prompt]},
-                ],
-            )
-
-            answer = response.text
+            try:
+                response = model.generate_content(
+                    contents=[
+                        {"role": "user", "parts": [full_prompt]},
+                        *chat_history,
+                        {"role": "user", "parts": [prompt]},
+                    ],
+                )
+                answer = response.text
+            except Exception as e:
+                if "429" in str(e) or "ResourceExhausted" in str(e):
+                    answer = (
+                        "⚠️ I'm currently experiencing high demand and have reached "
+                        "my usage limit. Please try again in a minute or two. "
+                        "If the issue persists, try refreshing the page."
+                    )
+                else:
+                    answer = (
+                        "I'm sorry, I encountered an error processing your request. "
+                        "Please try again."
+                    )
 
         # Display the response
         st.markdown(answer)
