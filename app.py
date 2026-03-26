@@ -180,6 +180,7 @@ if prompt := st.chat_input("Ask a question..."):
             context = retriever.format_context(results)
 
             # Step 1b: Supplement with live web search
+            web_sources = []
             try:
                 with DDGS() as ddgs:
                     # Sometimes site-specific queries return empty lists format, so fallback if needed
@@ -190,6 +191,10 @@ if prompt := st.chat_input("Ask a question..."):
                     if web_results:
                         web_context = "\n".join([r["body"] for r in web_results])
                         context += f"\n\nAdditional web search results:\n{web_context}"
+                        # Save the web sources to display to the user later
+                        for r in web_results:
+                            # ddgs returns 'href' for the URL
+                            web_sources.append({"title": f"Web: {r.get('title', 'Search Result')}", "url": r.get("href", "")})
             except Exception as e:
                 pass  # Fallback to RAG-only if search fails
 
@@ -232,6 +237,8 @@ if prompt := st.chat_input("Ask a question..."):
 
         # Show sources
         sources = [{"title": r["title"], "url": r["url"]} for r in results]
+        sources.extend(web_sources)
+        
         if sources:
             with st.expander("📄 Sources"):
                 for source in sources:
