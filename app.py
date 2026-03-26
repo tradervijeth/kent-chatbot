@@ -198,7 +198,9 @@ if prompt := st.chat_input("Ask a question..."):
             full_prompt = SYSTEM_PROMPT.format(context=context)
 
             # Step 3: Call Gemini to generate a response
-            model = genai.GenerativeModel(GENERATION_MODEL)
+            # Pass the RAG context as a system instruction so it applies to the current turn
+            # without mangling the chat history.
+            model = genai.GenerativeModel(GENERATION_MODEL, system_instruction=full_prompt)
             chat_history = []
             for msg in st.session_state.messages[1:]:  # skip welcome message
                 chat_history.append({
@@ -207,12 +209,9 @@ if prompt := st.chat_input("Ask a question..."):
                 })
 
             try:
+                # chat_history already includes the latest user prompt from line 167
                 response = model.generate_content(
-                    contents=[
-                        {"role": "user", "parts": [full_prompt]},
-                        *chat_history,
-                        {"role": "user", "parts": [prompt]},
-                    ],
+                    contents=chat_history,
                 )
                 answer = response.text
             except Exception as e:
