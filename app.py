@@ -110,8 +110,9 @@ st.markdown("""
 # --- Kent Logo ---
 with open("kent_logo.png", "rb") as f:
     logo_data = base64.b64encode(f.read()).decode()
+
 st.markdown(
-    f'<img src="data:image/png;base64,{logo_data}" width="180" style="margin-bottom: 8px;">',
+    f'<img src="data:image/png;base64,{logo_data}" width="180" style="margin-bottom: 8px; background-color: white; padding: 5px; border-radius: 8px;">',
     unsafe_allow_html=True,
 )
 
