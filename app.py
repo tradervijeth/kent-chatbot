@@ -253,8 +253,16 @@ if prompt := st.chat_input("Ask a question..."):
                 # chat_history already includes the latest user prompt from line 167
                 response = model.generate_content(
                     contents=chat_history,
+                    stream=True
                 )
-                answer = response.text
+                message_placeholder = st.empty()
+                answer = ""
+                for chunk in response:
+                    if hasattr(chunk, "text") and chunk.text:
+                        answer += chunk.text
+                        message_placeholder.markdown(answer + "▌")
+                message_placeholder.markdown(answer)
+                
             except Exception as e:
                 if "429" in str(e) or "ResourceExhausted" in str(e):
                     answer = (
@@ -267,9 +275,7 @@ if prompt := st.chat_input("Ask a question..."):
                         "I'm sorry, I encountered an error processing your request. "
                         "Please try again."
                     )
-
-        # Display the response
-        st.markdown(answer)
+                st.markdown(answer)
 
         # Show sources
         sources = [{"title": r["title"], "url": r["url"]} for r in results]
