@@ -129,7 +129,7 @@ st.caption(
 
 
 # --- Initialise session state ---
-if "messages" not in st.session_state:
+def init_chat():
     st.session_state.messages = [
         {
             "role": "assistant",
@@ -141,6 +141,16 @@ if "messages" not in st.session_state:
             "sources": [],
         }
     ]
+
+if "messages" not in st.session_state:
+    init_chat()
+
+# --- Sidebar ---
+with st.sidebar:
+    st.markdown("### Chat Controls")
+    if st.button("🗑️ Reset Conversation", use_container_width=True):
+        init_chat()
+        st.rerun()
 
 # --- Load retriever ---
 try:
