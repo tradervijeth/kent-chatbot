@@ -189,12 +189,36 @@ if prompt := st.chat_input("Ask a question..."):
                         web_results = list(ddgs.text(prompt, max_results=3))
                     
                     if web_results:
-                        web_context = "\n".join([r["body"] for r in web_results])
-                        context += f"\n\nAdditional web search results:\n{web_context}"
+                        import requests
+                        from bs4 import BeautifulSoup
+                        
+                        web_context_parts = []
+                        # 1. Always include the snippets
+                        web_context_parts.append("\n".join([r["body"] for r in web_results]))
+                        
                         # Save the web sources to display to the user later
                         for r in web_results:
-                            # ddgs returns 'href' for the URL
                             web_sources.append({"title": f"Web: {r.get('title', 'Search Result')}", "url": r.get("href", "")})
+                        
+                        # 2. Scrape the full text of the TOP search result to get concrete details
+                        top_url = web_results[0].get("href")
+                        if top_url:
+                            try:
+                                headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+                                resp = requests.get(top_url, headers=headers, timeout=5)
+                                if resp.status_code == 200:
+                                    soup = BeautifulSoup(resp.text, 'html.parser')
+                                    # Strip out basic fluff and grab text
+                                    for script in soup(["script", "style", "nav", "footer"]):
+                                        script.decompose()
+                                    text = soup.get_text(separator=' ', strip=True)
+                                    # Append the first 3000 chars to avoid blowing up the token limit
+                                    web_context_parts.append(f"\n--- Full Page Content from Top Result ({top_url}) ---\n{text[:3000]}")
+                            except Exception:
+                                pass
+                                
+                        web_context = "\n\n".join(web_context_parts)
+                        context += f"\n\nAdditional web search results:\n{web_context}"
             except Exception as e:
                 pass  # Fallback to RAG-only if search fails
 
