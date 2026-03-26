@@ -175,18 +175,29 @@ if prompt := st.chat_input("Ask a question..."):
     # Generate response
     with st.chat_message("assistant"):
         with st.spinner("Searching university information..."):
-            # Step 1: Retrieve relevant content from RAG
-            results = retriever.retrieve(prompt)
+            
+            # Contextual Query Expansion (Memory for Search Engines)
+            # If there's a previous user question, combine it with the current prompt 
+            # so FAISS and DDGS understand the context of short follow-up questions.
+            search_query = prompt
+            if len(st.session_state.messages) >= 4:
+                # [-1] is current prompt, [-2] is last assistant reply, [-3] is last user question
+                last_user_msg = st.session_state.messages[-3].get("content", "")
+                # Only use the first 100 characters so the search engine doesn't get confused by massive paragraphs
+                search_query = f"{last_user_msg[:100]} {prompt}"
+            
+            # Step 1: Retrieve relevant content from RAG using expanded query
+            results = retriever.retrieve(search_query)
             context = retriever.format_context(results)
 
-            # Step 1b: Supplement with live web search
+            # Step 1b: Supplement with live web search using expanded query
             web_sources = []
             try:
                 with DDGS() as ddgs:
                     # Sometimes site-specific queries return empty lists format, so fallback if needed
-                    web_results = list(ddgs.text(f"{prompt} site:kent.ac.uk", max_results=3))
+                    web_results = list(ddgs.text(f"{search_query} site:kent.ac.uk", max_results=3))
                     if not web_results:
-                        web_results = list(ddgs.text(prompt, max_results=3))
+                        web_results = list(ddgs.text(search_query, max_results=3))
                     
                     if web_results:
                         import requests
