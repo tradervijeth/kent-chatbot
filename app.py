@@ -200,22 +200,23 @@ if prompt := st.chat_input("Ask a question..."):
                         for r in web_results:
                             web_sources.append({"title": f"Web: {r.get('title', 'Search Result')}", "url": r.get("href", "")})
                         
-                        # 2. Scrape the full text of the TOP search result to get concrete details
-                        top_url = web_results[0].get("href")
-                        if top_url:
-                            try:
-                                headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-                                resp = requests.get(top_url, headers=headers, timeout=5)
-                                if resp.status_code == 200:
-                                    soup = BeautifulSoup(resp.text, 'html.parser')
-                                    # Strip out basic fluff and grab text
-                                    for script in soup(["script", "style", "nav", "footer"]):
-                                        script.decompose()
-                                    text = soup.get_text(separator=' ', strip=True)
-                                    # Append the first 3000 chars to avoid blowing up the token limit
-                                    web_context_parts.append(f"\n--- Full Page Content from Top Result ({top_url}) ---\n{text[:3000]}")
-                            except Exception:
-                                pass
+                        # 2. Scrape the full text of ALL search results to get extremely concrete details
+                        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+                        for i, r in enumerate(web_results):
+                            url = r.get("href")
+                            if url:
+                                try:
+                                    resp = requests.get(url, headers=headers, timeout=3)
+                                    if resp.status_code == 200:
+                                        soup = BeautifulSoup(resp.text, 'html.parser')
+                                        # Strip out basic fluff and grab text
+                                        for script in soup(["script", "style", "nav", "footer"]):
+                                            script.decompose()
+                                        text = soup.get_text(separator=' ', strip=True)
+                                        # Append the first 2000 chars of each to avoid blowing up the token limit
+                                        web_context_parts.append(f"\n--- Full Page Content Result {i+1} ({url}) ---\n{text[:2000]}")
+                                except Exception:
+                                    pass
                                 
                         web_context = "\n\n".join(web_context_parts)
                         context += f"\n\nAdditional web search results:\n{web_context}"

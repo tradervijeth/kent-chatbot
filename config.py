@@ -11,7 +11,7 @@ CHUNK_SIZE = 400
 CHUNK_OVERLAP = 80
 
 # How many chunks to retrieve per student question
-TOP_K = 4
+TOP_K = 8
 
 # Google's free embedding model - turns text into vectors
 EMBEDDING_MODEL = "models/gemini-embedding-001"
