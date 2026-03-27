@@ -35,6 +35,12 @@ To ensure the chatbot is usable by a diverse student body, I engineered several 
 * **Live Web Fallback:** DuckDuckGo Search (`ddgs`)
 * **Environment:** Python 3.10+, `python-dotenv`
 
+## Known Limitations & Future Work
+As a rapid prototype, there are a few deliberate architectural tradeoffs that could be expanded upon in future iterations:
+1. **Strict Response Conciseness:** The system prompt rigidly caps responses at ~150 words to prevent hallucinated rambling and ensure quick readability on mobile. While this is great for fast answers, it can occasionally be overly restrictive for complex, multi-step administrative queries (e.g., deeply layered visa application steps). Future iterations would classify query complexity dynamically before generation.
+2. **Single-Turn Query Expansion (Retrieval Memory):** The `search_query` concatenation logic intentionally only looks back one single turn (`t-1`). This ensures RAG retrieval remains incredibly fast and prevents semantic string drift. However, if a student asks deeply nested, three-or-four-step follow-up questions, the foundation of the topic may slip from the search engine. Future work would replace naive string concatenation with an LLM-powered Query Rewriter.
+3. **Generic Web Request Headers:** The live `app.py` fallback crawler utilizes a generic Windows/Mozilla `User-Agent` to successfully bypass DuckDuckGo's aggressive anti-bot protections, whereas the internal `scraper.py` pipeline utilizes a structured, polite crawler agent. For a production pipeline, this would be replaced with a robust rotating residential proxy service.
+
 ## Running Locally
 
 **1. Clone the repository**
