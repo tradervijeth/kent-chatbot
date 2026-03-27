@@ -14,9 +14,16 @@ Standard chatbots often hallucinate facts or fail when asked highly specific uni
 4. **Contextual Query Expansion:** A classic problem with RAG systems is handling follow-up questions (e.g., Q1: "What is the meningitis outbreak?" -> Q2: "Where can I get vaccinated?"). I engineered a conversational memory pipeline that seamlessly concatenates previous user prompts into the background search query, guaranteeing the FAISS and DDGS retrieval engines never lose track of the topic.
 5. **Strict Safety Guardrails:** I engineered the system prompt to explicitly refuse medical or psychological advice. If a student mentions severe depression or suicidal ideation, the LLM intercepts the risk and immediately supplies the official University Campus Security number, Student Support emails, and the NHS emergency helplines.
 6. **Robust Quota Management:** I implemented graceful degradation try/except blocks to handle `ResourceExhausted` API errors cleanly.
-7. **Deep Branding & Accessibility Integration:** I themed the Streamlit UI to match the official University of Kent identity (Navy Blue, Cyan, Overpass Font). I also restructured the University logo into an accessible "Card Badge" layout so it remains highly readable even if visually impaired users select Dark Mode or High Contrast themes on their OS.
+7. **Deep Branding Integration:** I themed the Streamlit UI to match the official University of Kent identity (Navy Blue, Cyan, Overpass Font).
 8. **Real-time Streaming UI:** Engineered the Gemini LLM connection to stream the generated responses token-by-token back to the frontend, driving perceived latency limits to near-zero.
 9. **Interactive Memory Controls:** Programmed a persistent application sidebar enabling immediate chat context resets via a custom `st.session_state` wiping function.
+
+### Accessibility (a11y) Features
+To ensure the chatbot is usable by a diverse student body, I engineered several accessibility features directly into the frontend:
+- **WCAG-Compliant Color Contrast:** Interactive elements (buttons, chat bubbles) use the official UKC Cyan hue (`#0085cf`) paired strictly with `color: white`, satisfying WCAG 2.1 AA contrast ratio requirements.
+- **High-Contrast Dark Mode Support:** The university logo is wrapped in an inline CSS container with a stark white background (`padding: 5px; border-radius: 8px`). This guarantees it remains 100% legible even if a visually impaired user forces their OS into Dark Mode or a High Contrast accessibility theme.
+- **Keyboard Navigation Focus Rings:** I implemented a custom glowing cyan CSS focus halo around the chat input to assist motor-impaired users navigating exclusively via the `TAB` key.
+- **Semantic HTML & Screen Reader Support:** The Streamlit DOM tree respects native `<h1>` heading hierarchy and preserves standard `aria-labels` on inputs and buttons, meaning visually impaired users using Apple VoiceOver or NVDA can natively read and interact with the chatbot interface.
 
 ## Tech Stack
 * **Frontend UI:** Streamlit
