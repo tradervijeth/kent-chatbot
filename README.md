@@ -1,5 +1,7 @@
 # University of Kent Student Assistant Chatbot
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://kent-chatbotassessment.streamlit.app/)
+
 This is a prototype conversational AI student support assistant designed specifically for the University of Kent. It provides an immediate, accurate first point of contact for students regarding admissions, assessments, deadlines, and crucial wellbeing support.
 
 It was built with Streamlit, Google Gemini (2.5 Flash), and a hybrid local/cloud retrieval architecture.
@@ -64,4 +66,8 @@ streamlit run app.py
 ```
 
 ## Deployment
-This app is fully hosted and deployed on Streamlit Community Cloud. The hybrid RAG architecture runs natively in the cloud environment, utilizing Streamlit Secrets to manage the Gemini API configuration.
+This app is fully hosted and deployed on Streamlit Community Cloud. You can access the live demo here: **[Kent Student Assistant Chatbot](https://kent-chatbotassessment.streamlit.app/)**
+
+> **Note on Usage Limits:** This prototype utilizes the free tier of the Google Gemini API. As a result, there are strict rate limits on the number of queries allowed per minute. If you encounter a *"high demand"* error message while testing the demo, the API quota has temporarily been reached. Please wait 60 seconds and try your message again!
+
+The hybrid RAG architecture runs natively in the cloud environment, utilizing Streamlit Secrets to manage the Gemini API configuration.
